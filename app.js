@@ -46,6 +46,7 @@ app.use(allowCrossDomain);
 
 app.use('/', index);
 app.use('/users', users);
+//app.use('/im', im);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
