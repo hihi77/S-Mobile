@@ -30,7 +30,7 @@ router.get('/add',function(req, res, next) {
   data.sysNotice = [];
   data.messages = [];
   data.messageBadge = 0;
-  data.headUrl = "../../../assets/img/avatar.png";
+  data.avatar = "../../../assets/img/avatar.png";
   data.config = {位置隐身可见: false, 基本信息可见: false, 个人简历可见: false};
   var collection = db.collection('users');
   collection.find({email:data.email}).toArray(function (err,rest) {
