@@ -2,11 +2,9 @@ var express = require('express');
 var router = express.Router();
 var db = require('../bin/database').db;
 var param;
-var data;
 
 router.use(function(req, res, next){
     param = req.query || {};
-    data = {};
     next();
 });
 
@@ -16,8 +14,9 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/add',function(req, res, next) {
+  var data = {};
   if (!param.email || !param.password) {
-      res.send({result: {status: 1, errorMessage: "Invalid Params!"}});
+      res.send({status: 1, errorMessage: "Invalid Params!"});
   }
   data.email = param.email || "";
   data.name = param.name || "user";
@@ -36,8 +35,7 @@ router.get('/add',function(req, res, next) {
   collection.find({email:data.email}).toArray(function (err,rest) {
     if(err)
     {
-      console.log('Error:'+ err);
-      return;
+      res.send({status: 1, errorMessage: "Database error"});
     }else if(!rest[0]){
       collection.insertOne(data ,function(err, result) {
         if(err)
@@ -48,7 +46,7 @@ router.get('/add',function(req, res, next) {
         }
       });
     } else {
-      res.send("This email has been used already!");
+      res.send({status: 1, erroeMessage:"This email has been used already!"});
     }
   })
 });
