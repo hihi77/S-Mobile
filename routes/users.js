@@ -15,11 +15,13 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource: user');
 });
 
-router.get('/new',function(req, res, next) {
-  if (!param.email || !param.username) {
+router.get('/add',function(req, res, next) {
+  if (!param.email || !param.password) {
       res.send({result: {status: 1, errorMessage: "Invalid Params!"}});
   }
   data.email = param.email || "";
+  data.name = param.name || "user";
+  data.password = param.password || "111111";
   data.participate = {};
   data.basicinfo = {nickname: param.username};
   data.projectExperience = [];
@@ -28,7 +30,7 @@ router.get('/new',function(req, res, next) {
   data.sysNotice = [];
   data.messages = [];
   data.messageBadge = 0;
-  data.headUrl = "./img/default/head.png";
+  data.headUrl = "../../../assets/img/avatar.png";
   data.config = {位置隐身可见: false, 基本信息可见: false, 个人简历可见: false};
   var collection = db.collection('users');
   collection.find({email:data.email}).toArray(function (err,rest) {
