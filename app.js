@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-var group = require('./routes/group');
+var groups = require('./routes/groups');
 var app = express();
 
 // view engine setup
@@ -46,7 +46,7 @@ app.use(allowCrossDomain);
 
 app.use('/', index);
 app.use('/users', users);
-app.use('/group', group);
+app.use('/groups', groups);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

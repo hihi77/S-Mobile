@@ -29,6 +29,7 @@ router.get('/add',function(req, res, next) {
   data.sysNotice = [];
   data.messages = [];
   data.messageBadge = 0;
+  data.threadsList = [];
   data.avatar = "../../../assets/img/avatar.png";
   data.config = {位置隐身可见: false, 基本信息可见: false, 个人简历可见: false};
   var collection = db.collection('users');
@@ -78,49 +79,12 @@ router.get('/login', function(req, res, next){
         res.send(err);
       }
       if(result[0]){
-        res.send(result[0]);        
+        res.send({status:0, data:result[0]});        
       } else {
         res.send({status: 1, errorMessage: "Not Found"});
       }
     });
   }
-});
-
-router.get('/addFriend', function(req, res, next) {
-  var collection = db.collection('users');
-  collection.updateOne({userId:param.userId},{$addToSet:{friends:data.userId}},function(err,result){
-    if(err){
-      console.log('err:',err);
-    }else {
-
-      collection.updateOne({userId:data.userId},{$addToSet:{friends:param.userId}},function(err,result){
-        res.send(result);
-        //db.close();
-      })
-    }
-  });
-
-});
-
-router.get('/friends', function(req, res, next){
-  var collection = db.collection('users');
-
-  collection.find(param,{friends:1,_id:0}).toArray(function(err, result) {
-    if(err)
-    {
-      console.log('Error:'+ err);
-      return;
-    }else{
-
-      var results = result[0]?(result[0].friends||[]):[];
-      collection.find({"userId":{"$in":results}},{userId:1,nickname:1,sex:1,phone:1,headUrl:1}).toArray(function(err,result){
-        res.send(result);
-        //db.close();
-        console.log(result);
-      })
-    }
-  });
-
 });
 
 router.get('/profile', function(req, res, next){
