@@ -62,7 +62,7 @@ router.post('/add',function(req, res, next) {
             var addedCollection = result.ops[0];
             var addedCollectionId = addedCollection._id;
             var userCollection = db.collection("users");
-            userCollection.updateMany({"email":{"$in":members}}, {"$addToSet": {"threadsList": addedCollectionId}}, function(err,resf){
+            userCollection.updateMany({"email":{"$in":members}}, {"$addToSet": {"threadsList": {id: addedCollectionId, flag: 0}}}, function(err,resf){
                 if (!err) 
                     res.send(addedCollection);                            
             });
