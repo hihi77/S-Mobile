@@ -13,6 +13,10 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource: user');
 });
 
+router.post("/upload", function(req, res, next) {
+  console.log(req);
+})
+
 router.get('/add',function(req, res, next) {
   var data = {};
   if (!param.email || !param.password) {
